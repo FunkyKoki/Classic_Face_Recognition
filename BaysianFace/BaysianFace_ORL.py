@@ -173,6 +173,32 @@ eigenVectorsExtra = np.matmul(deltaExtra, eigenVectorsExtra)
 eigenVectorsExtra = np.real(eigenVectorsExtra[:, :MExtra])
 eigenVectorsExtra = eigenVectorsExtra/np.linalg.norm(eigenVectorsExtra, axis=0, keepdims=True)
 
+# 可视化特征脸
+for i in range(18):
+    eigenFace = eigenVectorsIntra[:, i]
+    # 可视化之前需要对数据进行归一化处理，方可正常显示
+    eigenFace = (eigenFace - np.min(eigenFace))/(np.max(eigenFace)-np.min(eigenFace))
+    eigenFace = np.resize(eigenFace, (112, 92))
+
+    # 使用pyplot能够得到热图化输出，更加好看
+    plt.figure('eigenFace')
+    plt.imshow(eigenFace)
+    plt.axis('off')
+    plt.show()
+    plt.imsave('./eigenFaceIntra'+str(i).zfill(2)+'.png', eigenFace)
+for i in range(18):
+    eigenFace = eigenVectorsExtra[:, i]
+    # 可视化之前需要对数据进行归一化处理，方可正常显示
+    eigenFace = (eigenFace - np.min(eigenFace))/(np.max(eigenFace)-np.min(eigenFace))
+    eigenFace = np.resize(eigenFace, (112, 92))
+
+    # 使用pyplot能够得到热图化输出，更加好看
+    plt.figure('eigenFace')
+    plt.imshow(eigenFace)
+    plt.axis('off')
+    plt.show()
+    plt.imsave('./eigenFaceExtra'+str(i).zfill(2)+'.png', eigenFace)
+
 # 人脸识别
 # predictRightCount用以记录预测准确的次数
 predictRightCount = 0
